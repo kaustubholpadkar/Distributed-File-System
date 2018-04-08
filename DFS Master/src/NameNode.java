@@ -142,7 +142,7 @@ public class NameNode {
 
             socket.send(packet);
             socket.close();
-    		udp.thread.join();
+    		udp.thread.join(5000);
         	ips = new ArrayList<InetAddress>(udp.ips);
         	
     	} catch (Exception e) {

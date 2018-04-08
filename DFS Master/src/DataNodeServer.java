@@ -9,6 +9,9 @@ public class DataNodeServer {
 
 	public static void main(String[] args) {
 		
+		String server_ip = args[0];
+		int serverPort = 9132;
+		
 		try {
 			int port = 8983;
 			DataNodeImplementation node = new DataNodeImplementation();
@@ -16,6 +19,8 @@ public class DataNodeServer {
 			String bindLocation = "//localhost:" + port + "/dfs";
 			Naming.bind(bindLocation, node);
 			System.out.println("Server ready...");
+			
+			MultiClientThread multiClientThread = new MultiClientThread(server_ip, serverPort);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
