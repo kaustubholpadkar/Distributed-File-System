@@ -11,11 +11,12 @@ public class UDP_SERVER_THREAD implements Runnable{
 	public UDP_SERVER_THREAD(int port){
 		this.port = port;
 		ips = new ArrayList<InetAddress>();
-		thread = new Thread("Get_all_active_Ips");
+		thread = new Thread(this);
 		thread.start();
 	}
 	
 	public void run(){
+		
 		try{
 			InetAddress localAddress = InetAddress.getLocalHost();
 	        InetAddress clientIp;
@@ -26,8 +27,8 @@ public class UDP_SERVER_THREAD implements Runnable{
 	        int buffer_size = 2000;
 	        byte[] msg_receive_buffer;
 	        int i = 0;
-
-	        for (i = 0; i < 1; i++) {
+	        
+	        for (i = 0; i < 10; i++) {
 
 	            msg_receive_buffer = new byte[buffer_size];
 
@@ -38,6 +39,7 @@ public class UDP_SERVER_THREAD implements Runnable{
 	            ips.add(clientIp);
 
 	        }
+	        
 		} catch (Exception e){
 			e.printStackTrace();
 		}

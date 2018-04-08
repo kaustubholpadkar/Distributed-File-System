@@ -8,7 +8,7 @@ public class IpMainClass {
 			node.updateIPs();
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 
 	}

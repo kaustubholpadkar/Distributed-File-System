@@ -10,6 +10,8 @@ import java.rmi.Naming;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.plaf.SliderUI;
+
 public class NameNode {
 
     // Block size of each fragment
@@ -126,6 +128,8 @@ public class NameNode {
     	try {
     		UDP_SERVER_THREAD udp = new UDP_SERVER_THREAD(9132);
         	
+			Thread.sleep(1000);
+    		
     		String grp = "224.0.0.0";
             int serverPort = 8899;
             
@@ -138,12 +142,11 @@ public class NameNode {
 
             socket.send(packet);
             socket.close();
-            
     		udp.thread.join();
         	ips = new ArrayList<InetAddress>(udp.ips);
         	
     	} catch (Exception e) {
-    		
+    		e.printStackTrace();
     	}
     	
     }

@@ -32,9 +32,12 @@ public class MultiClient {
             msg = "Hii Server";
             byte[] buf1 = msg.getBytes();
             //byte[] addr = server_ip.getBytes();
-            DatagramPacket reply = new DatagramPacket(buf1, buf1.length,InetAddress.getByName(server_ip), serverPort);
-            DatagramSocket mysocket = new DatagramSocket(localPort, localAddress); 
-            mysocket.send(reply);
+            DatagramPacket reply = new DatagramPacket(buf1, buf1.length, InetAddress.getLocalHost(), 9132);
+            DatagramSocket mysocket = new DatagramSocket(9002, InetAddress.getLocalHost());
+            // while(true) {
+            	mysocket.send(reply);
+            //}
+            
             
             mysocket.close();
 
