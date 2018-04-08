@@ -34,9 +34,8 @@ public class UDP_SERVER_THREAD implements Runnable{
 	            msg_received = new DatagramPacket(msg_receive_buffer, buffer_size);
 	            serverSocket.receive(msg_received);
 	            clientIp = msg_received.getAddress();
-	            System.out.println(clientIp.toString());
+	            System.out.println(clientIp.getHostAddress());
 	            ips.add(clientIp);
-	            i++;
 
 	        }
 		} catch (Exception e){
