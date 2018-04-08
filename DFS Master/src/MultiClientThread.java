@@ -20,7 +20,7 @@ public class MultiClientThread implements Runnable{
     	this.server_ip = server_ip;
     	
     	try {
-    		socket = new MulticastSocket(serverPort);
+    		socket = new MulticastSocket(8899);
             socket.joinGroup(InetAddress.getByName(grp));    		
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -34,6 +34,7 @@ public class MultiClientThread implements Runnable{
 	public void run() {
 		while (true) {
 			try {
+				System.out.println("In thread..");
 	            InetAddress localAddress = InetAddress.getLocalHost();
 	            
 	            int buf_size = 1024;
