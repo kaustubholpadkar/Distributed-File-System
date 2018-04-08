@@ -14,7 +14,7 @@ public class NameNode {
 
     // Block size of each fragment
     int blocksize;
-    ArrayList<String> ips;
+    ArrayList<InetAddress> ips;
 
     // Constructor
     public NameNode (int blocksize) {
@@ -140,7 +140,7 @@ public class NameNode {
             socket.close();
             
     		udp.join();
-        	ips = new ArrayList<String>(udp.ips);
+        	ips = new ArrayList<InetAddress>(udp.ips);
         	
     	} catch (Exception e) {
     		
