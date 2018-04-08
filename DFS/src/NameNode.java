@@ -2,14 +2,19 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
 import java.rmi.Naming;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NameNode {
 
     // Block size of each fragment
     int blocksize;
+    ArrayList<String> ips;
 
     // Constructor
     public NameNode (int blocksize) {
@@ -117,5 +122,30 @@ public class NameNode {
         }
     }
 
+    public void updateIPs () {
+    	try {
+    		UDP_SERVER_THREAD udp = new UDP_SERVER_THREAD(9132);
+        	
+    		String grp = "224.0.0.0";
+            int serverPort = 8899;
+            
+            MulticastSocket socket = new MulticastSocket();
+
+            String msg = "Name Node is ON!";
+            byte[] buf = msg.getBytes();
+
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, InetAddress.getByName(grp), serverPort);
+
+            socket.send(packet);
+            socket.close();
+            
+    		udp.join();
+        	ips = new ArrayList<String>(udp.ips);
+        	
+    	} catch (Exception e) {
+    		
+    	}
+    	
+    }
 
 }
