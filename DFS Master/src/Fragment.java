@@ -9,16 +9,16 @@ public class Fragment implements Serializable {
     byte[] bytes = null;                // Bytes contained by the fragment
     int seqno;                          // Sequence no. of fragment
     long size;                          // Size of fragment
-
-
+    String username;
 
     // Initialize fragment parameters
-    public Fragment (String filename, byte[] bytes, int seqno) {
+    public Fragment (String filename, byte[] bytes, int seqno, String username) {
         this.filename = filename;
         this.bytes = bytes;
         this.seqno = seqno;
         this.size = bytes.length;
-        this.fragment_filename = filename + "_" + seqno + ".dfs";
+        this.fragment_filename = username + "_" + filename + "_" + seqno + ".dfs";
+        this.username = username;
     }
 
     public byte[] getBytes () {

@@ -1,4 +1,3 @@
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,20 +6,38 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.nio.ByteBuffer;
 import java.rmi.Naming;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.plaf.SliderUI;
 
 public class NameNode {
 
     // Block size of each fragment
     int blocksize;
     ArrayList<InetAddress> ips;
+    int replication_factor;
+    
+
+    // JDBC driver name and database URL
+    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost/dfs";
+
+    //  Database credentials
+    static final String USER = "root";
+    static final String PASS = "";
+    
+    Connection conn = null;
+    Statement stmt = null;
+
 
     // Constructor
-    public NameNode (int blocksize) {
+    public NameNode (int blocksize, int replication_factor) {
         this.blocksize = blocksize;
+        this.replication_factor = replication_factor; 
     }
 
     // Convert File to array of Bytes
@@ -52,7 +69,7 @@ public class NameNode {
     }
 
     // Divide file into fragments
-    public Fragment[] fragmentFile (File file) {
+    public Fragment[] fragmentFile (File file, String username) {
 
         int numberOfFragments;
         byte[] bytes;
@@ -69,12 +86,12 @@ public class NameNode {
         int index = 0, i = 0;
         for (i = 0; i < numberOfFragments - 1; i++){
             bytes = Arrays.copyOfRange(bytearray, index, index + blocksize);
-            fragments[i] = new Fragment(filename, bytes, i);
+            fragments[i] = new Fragment(filename, bytes, i, username);
             index += blocksize;
         }
 
         bytes = Arrays.copyOfRange(bytearray, index, bytearray.length);
-        fragments[i] = new Fragment(filename, bytes, i);
+        fragments[i] = new Fragment(filename, bytes, i, username);
 
         return fragments;
     }
@@ -108,13 +125,13 @@ public class NameNode {
         return status;
     }
 
-    public void distribute (String ip, Fragment fragment) {
+    public void sendFragment (String ip, Fragment fragment) {
 
 
         try{
         	int remotePort = 8983;
         	String connectLocation = "//" + ip + ":" + remotePort + "/dfs";
-            DataNodeInterface node = (DataNodeInterface) Naming.lookup(connectLocation);
+        	DataNodeInterface node = (DataNodeInterface) Naming.lookup(connectLocation);
 
 //            System.out.println(node.helloServer());
             node.push(fragment.getFragment_filename(), fragment);
@@ -150,5 +167,50 @@ public class NameNode {
     	}
     	
     }
+    
+    public void distributeFile (File file, String username) {
+    	updateIPs();
+    	Fragment[] fragments = fragmentFile(file, username);
+    	int index = 0;
+    	
+    	for (int i = 0; i < fragments.length; i++) {
+    		for (int j = 0; j < replication_factor; j++) {
+    			sendFragment(ips.get(index).getHostAddress(), fragments[i]);
+    			
+    			System.out.println(i + " " + j);
+    			
+    			savetodatabase(username, file.getName(), fragments[i].seqno, ips.get(index).getHostAddress());
+    			
+    			index += 1;
+    			index = index%ips.size();
+    		}
+    	}
+    }
 
+	public void savetodatabase(String username, String filename, int seqno, String hostAddress) {
+		try {
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            
+            PreparedStatement stmt = conn.prepareStatement("insert into chunks (filename, username, seqno, ip) values(?,?,?,?)");
+            
+            stmt.setString(1, filename);
+            stmt.setString(2, username);
+            stmt.setInt(3, seqno);
+            stmt.setString(4, hostAddress);
+            stmt.execute();            
+
+            stmt.close();
+            conn.close();
+
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+
+	}
 }
