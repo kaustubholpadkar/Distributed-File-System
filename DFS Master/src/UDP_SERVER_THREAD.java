@@ -28,7 +28,7 @@ public class UDP_SERVER_THREAD implements Runnable{
 	        byte[] msg_receive_buffer;
 	        int i = 0;
 	        
-	        for (i = 0; i < 10; i++) {
+	        for (i = 0; i < 3; i++) {
 
 	            msg_receive_buffer = new byte[buffer_size];
 

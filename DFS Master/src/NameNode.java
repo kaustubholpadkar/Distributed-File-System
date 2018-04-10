@@ -9,9 +9,11 @@ import java.rmi.Naming;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 
 public class NameNode {
@@ -96,7 +98,7 @@ public class NameNode {
         return fragments;
     }
     
-    public boolean defragmentFile (String filename, Fragment[] fragments) {
+    public boolean defragmentFile (String filename, ArrayList<Fragment> fragments) {
     	boolean status = false;
     	byte[] bytes = null;
     	ByteBuffer buffer = null;
@@ -184,6 +186,47 @@ public class NameNode {
     			index += 1;
     			index = index%ips.size();
     		}
+    	}
+    }
+    
+    public void collectFile (File file, String username) {
+    	updateIPs();
+    	ArrayList<Fragment> fragments = new ArrayList<Fragment>();
+    	DataNodeInterface node;
+    	String filename = file.getName();
+    	String sql = "select * from chunks where filename = '"+ filename + "' and username = '" + username + "' order by seqno";
+    	int remotePort = 8983;
+    	int seqno = -1;
+    	String ip;
+    	String fragment_filename = "";
+    	
+    	
+    	try{
+    		Class.forName("com.mysql.jdbc.Driver");
+
+            //STEP 3: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            
+    		stmt = conn.createStatement();
+        	ResultSet rs = stmt.executeQuery(sql);
+        	int newseq = -1;
+        	
+        	while (rs.next()) {
+            	ip = rs.getString("ip");
+            	seqno = rs.getInt("seqno");
+            	if (ips.contains(InetAddress.getByName(ip)) && newseq != seqno) {
+            		String connectLocation = "//" + ip + ":" + remotePort + "/dfs";
+            		node = (DataNodeInterface) Naming.lookup(connectLocation);
+            		fragment_filename = username + "_" + filename + "_" + seqno + ".dfs";
+            		fragments.add(node.pull(fragment_filename));
+            		newseq = seqno;
+            	}
+        	}
+        	
+        	defragmentFile (filename, fragments);
+    	} catch (Exception e) {
+    		e.printStackTrace();
     	}
     }
 

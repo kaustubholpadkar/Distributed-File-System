@@ -8,8 +8,9 @@ public class MainClass {
         	File file = new File(args[0]);
         	String username = args[1];
         	
-        	NameNode namenode = new NameNode(1024, 3);
-        	namenode.distributeFile(file, username);
+        	NameNode namenode = new NameNode(1024, 2);
+        	// namenode.distributeFile(file, username);
+        	namenode.collectFile(file, username);
         	
         } catch (Exception e) {
 
