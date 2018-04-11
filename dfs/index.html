@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Index Servlet</title>
+    </head>
+    <body>
+        <h2>Download Setup</h2>
+        <form method = "GET" action = "DownloadDataNodeSetup" name="form1">
+            <input type="submit" value="download setup">
+        </form>
+        
+        <hr>
+        
+        <h2>Upload File</h2>
+        <form method = "POST" action = "UploadFile" name="form2" enctype = "multipart/form-data">
+            Username: <input type ="text" name="username">
+            <br>
+            <input type="file" name="file">
+            <br>
+            <input type="submit" value="Upload File">
+        </form>
+        
+        <hr>
+        
+        <h2>Download File</h2>
+        <form method = "GET" action = "DownloadFile" name="form3">
+            Username: <input type ="text" id="username1" name="username1">
+            <br>
+            Filename: <input type="text" id="filename1">
+            <br>
+            <input type="submit" value="Download File">
+        </form>
+    </body>
+</html>
+

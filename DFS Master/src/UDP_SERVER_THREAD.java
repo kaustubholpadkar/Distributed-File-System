@@ -16,19 +16,19 @@ public class UDP_SERVER_THREAD implements Runnable{
 	}
 	
 	public void run(){
-		
+		DatagramSocket serverSocket = null;
 		try{
 			InetAddress localAddress = InetAddress.getLocalHost();
 	        InetAddress clientIp;
 
-	        DatagramSocket serverSocket = new DatagramSocket(port, localAddress);
+	        serverSocket = new DatagramSocket(port, localAddress);
 	        DatagramPacket msg_received;
 
 	        int buffer_size = 2000;
 	        byte[] msg_receive_buffer;
 	        int i = 0;
 	        
-	        for (i = 0; i < 3; i++) {
+	        for (i = 0; i < 2; i++) {
 
 	            msg_receive_buffer = new byte[buffer_size];
 
@@ -42,6 +42,15 @@ public class UDP_SERVER_THREAD implements Runnable{
 	        
 		} catch (Exception e){
 			e.printStackTrace();
+		}
+		finally {
+			try{
+				serverSocket.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}

@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
 
 
 public class NameNode {
@@ -40,13 +39,22 @@ public class NameNode {
     public NameNode (int blocksize, int replication_factor) {
         this.blocksize = blocksize;
         this.replication_factor = replication_factor; 
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Connecting to database...");
+	        conn = DriverManager.getConnection(DB_URL,USER,PASS);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     // Convert File to array of Bytes
     public byte[] fileToBytes (File file) {
+    	FileInputStream fis = null;
         try{
             byte[] bytearray = new byte[(int) file.length()];
-            FileInputStream fis  = new FileInputStream(file);
+            fis  = new FileInputStream(file);
             fis.read(bytearray);
             return bytearray;
         }
@@ -54,19 +62,34 @@ public class NameNode {
             e.printStackTrace();
             return null;
         }
+        finally {
+        	try{
+        		fis.close();
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        }
     }
 
     // Write array of Bytes to File
     public File bytesToFile (String name, byte[] bytearray) {
+    	FileOutputStream fos = null;
         try {
             File file = new File(name);
-            FileOutputStream fos = new FileOutputStream(file);
+            fos = new FileOutputStream(file);
             fos.write(bytearray);
             return file;
         }
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+        finally {
+        	try {
+        		fos.close();
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
         }
     }
 
@@ -202,11 +225,7 @@ public class NameNode {
     	
     	
     	try{
-    		Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+    		
             
     		stmt = conn.createStatement();
         	ResultSet rs = stmt.executeQuery(sql);
@@ -232,12 +251,6 @@ public class NameNode {
 
 	public void savetodatabase(String username, String filename, int seqno, String hostAddress) {
 		try {
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //STEP 3: Open a connection
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
             
             PreparedStatement stmt = conn.prepareStatement("insert into chunks (filename, username, seqno, ip) values(?,?,?,?)");
             

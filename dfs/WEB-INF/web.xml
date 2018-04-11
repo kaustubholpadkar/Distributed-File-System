@@ -1,0 +1,27 @@
+<web-app>
+
+	<context-param> 
+      <description>Location to store uploaded file</description> 
+      <param-name>file-upload</param-name> 
+      <param-value>
+         C:\apache-tomcat-8.5.29\webapps\dfs\WEB-INF\uploads
+      </param-value> 
+   </context-param>
+
+        <servlet>
+                <servlet-name>DownloadDataNodeSetup</servlet-name>
+                <servlet-class>DownloadDataNodeSetup</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>DownloadDataNodeSetup</servlet-name>
+                <url-pattern>/DownloadDataNodeSetup</url-pattern>
+        </servlet-mapping>
+	<servlet>
+                <servlet-name>UploadFile</servlet-name>
+                <servlet-class>UploadFile</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>UploadFile</servlet-name>
+                <url-pattern>/UploadFile</url-pattern>
+        </servlet-mapping>
+</web-app>
