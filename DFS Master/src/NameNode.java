@@ -126,6 +126,7 @@ public class NameNode {
     	byte[] bytes = null;
     	ByteBuffer buffer = null;
     	long size = 0;
+    	String filepath = "C:/apache-tomcat-8.5.29/webapps/dfs/WEB-INF/downloads/";
     	
     	try {
     		for (Fragment fragment : fragments){
@@ -139,7 +140,7 @@ public class NameNode {
                 buffer.put(fragment.getBytes());
             }
             
-            FileOutputStream fos = new FileOutputStream(filename);
+            FileOutputStream fos = new FileOutputStream(filepath + filename);
             fos.write(bytes);
             fos.close();
             status = true;
@@ -184,8 +185,9 @@ public class NameNode {
 
             socket.send(packet);
             socket.close();
-    		udp.thread.join(5000);
+            udp.thread.join(5000);
         	ips = new ArrayList<InetAddress>(udp.ips);
+        	udp.stop();
         	
     	} catch (Exception e) {
     		e.printStackTrace();
@@ -218,17 +220,26 @@ public class NameNode {
     	DataNodeInterface node;
     	String filename = file.getName();
     	String sql = "select * from chunks where filename = '"+ filename + "' and username = '" + username + "' order by seqno";
+    	
+    	System.out.println(sql);
+    	
     	int remotePort = 8983;
     	int seqno = -1;
     	String ip;
     	String fragment_filename = "";
-    	
+    	int count;
+    	String sql1;
     	
     	try{
-    		
-            
+    		sql1 = "select max(seqno) from chunks where filename = '" + filename + "'";
     		stmt = conn.createStatement();
-        	ResultSet rs = stmt.executeQuery(sql);
+    		ResultSet rs = stmt.executeQuery(sql1);
+    		rs.next();
+    		count = rs.getInt(1);
+    		count++;
+    		
+    		stmt = conn.createStatement();
+        	rs = stmt.executeQuery(sql);
         	int newseq = -1;
         	
         	while (rs.next()) {
@@ -240,10 +251,16 @@ public class NameNode {
             		fragment_filename = username + "_" + filename + "_" + seqno + ".dfs";
             		fragments.add(node.pull(fragment_filename));
             		newseq = seqno;
+            		count--;
             	}
         	}
         	
-        	defragmentFile (filename, fragments);
+        	if (count == 0) {
+        		defragmentFile (filename, fragments);
+        	} else {
+        		System.out.println("File cannot be created because one or more fragments are missing");
+        	}
+        	
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -261,7 +278,7 @@ public class NameNode {
             stmt.execute();            
 
             stmt.close();
-            conn.close();
+            // conn.close();
 
 
         } catch (Exception e) {

@@ -7,6 +7,8 @@ public class UDP_SERVER_THREAD implements Runnable{
 	int port;
 	Thread thread;
 	ArrayList<InetAddress> ips;
+	DatagramSocket serverSocket = null;
+	boolean flag = true;
 	
 	public UDP_SERVER_THREAD(int port){
 		this.port = port;
@@ -15,8 +17,19 @@ public class UDP_SERVER_THREAD implements Runnable{
 		thread.start();
 	}
 	
+	public synchronized void stop () {
+		
+		if (null != serverSocket) {
+			serverSocket.close();
+		}
+		/*
+		Thread.currentThread().interrupt();
+		*/
+		flag = false;
+	}
+	
 	public void run(){
-		DatagramSocket serverSocket = null;
+		
 		try{
 			InetAddress localAddress = InetAddress.getLocalHost();
 	        InetAddress clientIp;
@@ -28,7 +41,7 @@ public class UDP_SERVER_THREAD implements Runnable{
 	        byte[] msg_receive_buffer;
 	        int i = 0;
 	        
-	        for (i = 0; i < 2; i++) {
+	        while (flag) {
 
 	            msg_receive_buffer = new byte[buffer_size];
 
@@ -41,16 +54,7 @@ public class UDP_SERVER_THREAD implements Runnable{
 	        }
 	        
 		} catch (Exception e){
-			e.printStackTrace();
-		}
-		finally {
-			try{
-				serverSocket.close();
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+			System.out.println("Socket is closed, so I am here....");
 		}
 		
 	}

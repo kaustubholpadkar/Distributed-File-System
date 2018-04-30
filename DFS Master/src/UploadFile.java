@@ -7,7 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
- 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -33,7 +34,9 @@ public class UploadFile extends HttpServlet {
       throws ServletException, java.io.IOException {
 	   
 	   
-	   String username = request.getParameter("username");
+	   HttpSession session = request.getSession(false);
+	   
+	   String username = (String) session.getAttribute("username");
 	   
       // Check that we have a file upload request
       isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -105,6 +108,7 @@ public class UploadFile extends HttpServlet {
          
          
      	 node.distributeFile(file, username);
+     	 file.delete();
      	 
          } catch(Exception ex) {
             System.out.println(ex);
