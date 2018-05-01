@@ -82,5 +82,11 @@ public class DataNodeImplementation extends UnicastRemoteObject implements DataN
 		// TODO Auto-generated method stub
 				return "HelloWorld!";
 	}
+
+	@Override
+	public boolean isLive() throws RemoteException {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
 }

@@ -4,7 +4,7 @@ import java.rmi.registry.Registry;
 
 public class DataNodeClient {
 
-	static String remoteHostName = "192.168.43.253";
+	static String remoteHostName = "172.24.13.211";
     static int remotePort = 8983;
     static String connectLocation = "//" + remoteHostName + ":" + remotePort
             + "/dfs";
@@ -18,7 +18,7 @@ public class DataNodeClient {
 	    
 	         // Looking up the registry for the remote object 
 //	         DataNodeInterface stub = (DataNodeInterface) registry.lookup("dfs"); 
-             System.out.println(node.helloServer());
+             System.out.println(node.delete("twitter.png"));
 		
 		}
 		catch(Exception ae){

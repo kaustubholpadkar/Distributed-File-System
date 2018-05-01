@@ -9,4 +9,6 @@ public interface DataNodeInterface extends Remote{
 	public String helloServer() throws RemoteException;
 	
 	public boolean delete (String filename)  throws RemoteException;
+	
+	public boolean isLive () throws RemoteException;
 }

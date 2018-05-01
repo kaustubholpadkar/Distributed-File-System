@@ -268,7 +268,7 @@ public class NameNode {
     
     public void deleteFile (String filename, String username) {
     	try {
-    		String select_query = "select id, ip, seqno from chunks where filename = " + filename + "and username = " + username;
+    		String select_query = "select id, ip, seqno from chunks where filename = '" + filename + "' and username = '" + username + "'";
     		
     		stmt = conn.createStatement();
     		ResultSet rs = stmt.executeQuery(select_query);
@@ -282,11 +282,16 @@ public class NameNode {
             	String connectLocation = "//" + ip + ":" + remotePort + "/dfs";
             	DataNodeInterface node = (DataNodeInterface) Naming.lookup(connectLocation);
             	String fragment_filename = username + "_" + filename + "_" + seqno + ".dfs";
+            	
+            	System.out.println(fragment_filename);
+            	
             	node.delete(fragment_filename);
     		}
     		
-        	String delete_query = "delete from chunks where filename = " + filename;
+    		stmt = conn.createStatement();
+        	String delete_query = "delete from chunks where filename = '" + filename + "' and username = '" + username + "'";
         	stmt.executeUpdate(delete_query);
+        	stmt.close();
         	
     	} catch (Exception e) {
     		
