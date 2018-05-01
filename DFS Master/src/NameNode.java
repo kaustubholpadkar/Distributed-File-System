@@ -265,6 +265,54 @@ public class NameNode {
     		e.printStackTrace();
     	}
     }
+    
+    public void deleteFile (String filename) {
+    	try {
+    		String select_query = "select id, ip, seqno, username from chunks where filename = " + filename;
+    		
+    		stmt = conn.createStatement();
+    		ResultSet rs = stmt.executeQuery(select_query);
+    		
+    		while (rs.next()) {
+    			String username = rs.getString("username");
+    			String ip = rs.getString("ip");
+    			int seqno = rs.getInt("seqno");
+    			
+    			int remotePort = 8983;
+            	String connectLocation = "//" + ip + ":" + remotePort + "/dfs";
+            	DataNodeInterface node = (DataNodeInterface) Naming.lookup(connectLocation);
+            	String fragment_filename = username + "_" + filename + "_" + seqno + ".dfs";
+            	node.delete(fragment_filename);
+    		}
+    		
+        	String delete_query = "delete from chunks where filename = " + filename;
+        	stmt.executeUpdate(delete_query);
+        	
+    	} catch (Exception e) {
+    		
+    	}
+    }
+    
+    public ArrayList<String> getFiles (String username) {
+    
+		ArrayList<String> files = new ArrayList<String>();
+		
+    	try {
+    		String select_query = "select distinct filename from chunks WHERE username = " + "'"+ username + "'";
+        	stmt = conn.createStatement();
+    		ResultSet rs = stmt.executeQuery(select_query);
+    		
+    		while (rs.next()) {
+    			String filename = rs.getString(1);
+    			files.add(filename);
+    		}
+    		
+    	} catch (Exception e) {
+    		
+		}
+    	
+		return files;
+    }
 
 	public void savetodatabase(String username, String filename, int seqno, String hostAddress) {
 		try {

@@ -7,4 +7,6 @@ public interface DataNodeInterface extends Remote{
 	public Fragment pull (String filename) throws RemoteException;
 	
 	public String helloServer() throws RemoteException;
+	
+	public boolean delete (String filename)  throws RemoteException;
 }

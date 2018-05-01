@@ -62,6 +62,20 @@ public class DataNodeImplementation extends UnicastRemoteObject implements DataN
 		
 		return fragment;
 	}
+	
+	public boolean delete (String filename)  throws RemoteException {
+		
+		try {
+			File file = new File(filename);
+			file.delete();
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;	
+		}
+		
+	} 
 
 	@Override
 	public String helloServer() throws RemoteException{
