@@ -266,15 +266,15 @@ public class NameNode {
     	}
     }
     
-    public void deleteFile (String filename) {
+    public void deleteFile (String filename, String username) {
     	try {
-    		String select_query = "select id, ip, seqno, username from chunks where filename = " + filename;
+    		String select_query = "select id, ip, seqno from chunks where filename = " + filename + "and username = " + username;
     		
     		stmt = conn.createStatement();
     		ResultSet rs = stmt.executeQuery(select_query);
     		
     		while (rs.next()) {
-    			String username = rs.getString("username");
+    			
     			String ip = rs.getString("ip");
     			int seqno = rs.getInt("seqno");
     			
