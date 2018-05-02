@@ -32,12 +32,18 @@ public class DFS extends HttpServlet {
         
         ArrayList<String> files = node.getFiles(username);
         
-        String html_files = "<ol>";
+        String html_files = "<table>";
+        
+        html_files += "<tr> <th> File Name </th> <th> Download </th> <th> Delete </th> </tr>";
         
         for (int i = 0; i < files.size(); i++) {
-        	html_files += "<li>" + files.get(i)+ "</li>";
+        	html_files += "<tr>";
+        	html_files += "<td>" + files.get(i)+ "</td>";
+        	html_files += "<td>" + "<a href = 'DownloadFile?filename1='" + files.get(i) + "'> Download </a>" + "</td>";
+        	html_files += "<td>" + "<a href = 'DeleteFile?filename4='" + files.get(i) + "'> Delete </a>" + "</td>";
+        	html_files += "</tr>";
         }
-        html_files += "</ol>";
+        html_files += "</table>";
         
         // String password = (String) session.getAttribute("password");
 
