@@ -14,7 +14,7 @@ public class DownloadDataNodeSetup extends HttpServlet {
 		response.setContentType("text/html");  
 		PrintWriter out = response.getWriter();
 		
-		String filename = "dfs.zip";   
+		String filename = "dfs.jar";   
 		String filepath = "C:/apache-tomcat-8.5.29/webapps/dfs/WEB-INF/setup/";   
 		response.setContentType("APPLICATION/OCTET-STREAM");   
 		response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   

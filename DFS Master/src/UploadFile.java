@@ -1,7 +1,8 @@
 // Import required java libraries
 import java.io.*;
 import java.util.*;
- 
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,20 +41,20 @@ public class UploadFile extends HttpServlet {
 	   
       // Check that we have a file upload request
       isMultipart = ServletFileUpload.isMultipartContent(request);
-      response.setContentType("text/html");
-      java.io.PrintWriter out = response.getWriter( );
+//      response.setContentType("text/html");
+//      java.io.PrintWriter out = response.getWriter( );
    
-      if( !isMultipart ) {
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>Servlet upload</title>");  
-         out.println("</head>");
-         out.println("<body>");
-         out.println("<p>No file uploaded</p>"); 
-         out.println("</body>");
-         out.println("</html>");
-         return;
-      }
+//      if( !isMultipart ) {
+//         out.println("<html>");
+//         out.println("<head>");
+//         out.println("<title>Servlet upload</title>");  
+//         out.println("</head>");
+//         out.println("<body>");
+//         out.println("<p>No file uploaded</p>"); 
+//         out.println("</body>");
+//         out.println("</html>");
+//         return;
+//      }
   
       DiskFileItemFactory factory = new DiskFileItemFactory();
    
@@ -76,11 +77,11 @@ public class UploadFile extends HttpServlet {
          // Process the uploaded file items
          Iterator i = fileItems.iterator();
 
-         out.println("<html>");
-         out.println("<head>");
-         out.println("<title>Servlet upload</title>");  
-         out.println("</head>");
-         out.println("<body>");
+//         out.println("<html>");
+//         out.println("<head>");
+//         out.println("<title>Servlet upload</title>");  
+//         out.println("</head>");
+//         out.println("<body>");
    
          while ( i.hasNext () ) {
             FileItem fi = (FileItem)i.next();
@@ -99,19 +100,27 @@ public class UploadFile extends HttpServlet {
                   file = new File( filePath + fileName.substring(fileName.lastIndexOf("\\")+1)) ;
                }
                fi.write( file ) ;
-               out.println("Uploaded Filename: " + fileName + "<br>");
-               out.println("Username: " + username + "<br>");
+//               out.println("Uploaded Filename: " + fileName + "<br>");
+//               out.println("Username: " + username + "<br>");
             }
          }
-         out.println("</body>");
-         out.println("</html>");
+//         out.println("</body>");
+//         out.println("</html>");
          
          
      	 node.distributeFile(file, username);
      	 file.delete();
+     	 Thread.sleep(1000);
+
+//     	RequestDispatcher rd=request.getRequestDispatcher("/");
+//        rd.forward(request, response);//method may be include or forward
      	 
          } catch(Exception ex) {
             System.out.println(ex);
+         } finally {
+        	 
+        	response.sendRedirect("/dfs/"); 
+             
          }
       }
       

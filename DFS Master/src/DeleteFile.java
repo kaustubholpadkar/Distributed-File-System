@@ -1,3 +1,6 @@
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +35,15 @@ public class DeleteFile extends HttpServlet {
 	    	node.deleteFile(filename, username);
 		} catch (Exception e) {
 			
-		}
+		} finally {
+       	 RequestDispatcher rd=request.getRequestDispatcher("/");
+         try {
+			rd.forward(request, response);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//method may be include or forward
+     }
 	}
 	
 }
