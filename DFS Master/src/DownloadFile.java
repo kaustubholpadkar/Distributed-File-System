@@ -25,14 +25,14 @@ public class DownloadFile extends HttpServlet {
 	   public void init( ){
 	      // Get the file location where it would be stored.
 	      //filePath = getServletContext().getInitParameter("file-upload"); 
-	      node = new NameNode(1024, 2);
+	      node = NameNode.getNode();
 	   }
 	   
 	   
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
     	
-    	OutputStream outStream;
+    	OutputStream outStream = null;
     	try{
     	HttpSession session = request.getSession(false);
     	
@@ -44,7 +44,7 @@ public class DownloadFile extends HttpServlet {
     	File file = new File(filename);
     	node.collectFile(file, username);
     	
-    	outStream = response.getOutputStream();
+    	
 
 //        PrintWriter out = response.getWriter();    	
 //        
@@ -53,13 +53,19 @@ public class DownloadFile extends HttpServlet {
         String filepath = "C:/apache-tomcat-8.5.29/webapps/dfs/WEB-INF/downloads/";
         File download_file = new File(filepath + filename);
         
-        response.setContentType("text/html");
-        // response.setContentType("APPLICATION/PNG");
-        response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");
+        if (!download_file.exists()) {
+        	RequestDispatcher rd=request.getRequestDispatcher("/");
+        	rd.forward(request, response);
+        }
         
+        outStream = response.getOutputStream();
         FileInputStream fileInputStream = new FileInputStream(download_file);
         
         System.out.println("Not Expected!");
+        
+        response.setContentType("text/html");
+        // response.setContentType("APPLICATION/PNG");
+        response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");
         
         ServletContext context = getServletContext();
      // gets MIME type of the file
@@ -101,6 +107,14 @@ public class DownloadFile extends HttpServlet {
     	}
     	catch (FileNotFoundException f) {
     		System.out.println("File cannot be created because one or more fragments are missing.............");
+    		
+    		try {
+    			outStream.close();
+				response.sendRedirect("/dfs/");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
     		RequestDispatcher rd=request.getRequestDispatcher("/");
             try {
 				rd.forward(request, response);
@@ -110,6 +124,12 @@ public class DownloadFile extends HttpServlet {
 			}//method may be include or forward
     	}
     	catch (Exception e) {
+    		try {
+				outStream.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
     		e.printStackTrace();
     	} 
     }

@@ -4,7 +4,7 @@
       <description>Location to store uploaded file</description> 
       <param-name>file-upload</param-name> 
       <param-value>
-         C:\apache-tomcat-8.5.29\webapps\dfs\WEB-INF\uploads
+         C:\apache-tomcat-8.5.29\webapps\dfs\WEB-INF\uploads\
       </param-value> 
    </context-param>
 
@@ -24,4 +24,83 @@
                 <servlet-name>UploadFile</servlet-name>
                 <url-pattern>/UploadFile</url-pattern>
         </servlet-mapping>
+
+	<servlet>
+                <servlet-name>DownloadFile</servlet-name>
+                <servlet-class>DownloadFile</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>DownloadFile</servlet-name>
+                <url-pattern>/DownloadFile</url-pattern>
+        </servlet-mapping>
+
+
+
+	<servlet>
+                <servlet-name>Index</servlet-name>
+                <servlet-class>Index</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>Index</servlet-name>
+                <url-pattern>/</url-pattern>
+        </servlet-mapping>
+
+
+	<servlet>
+                <servlet-name>Login</servlet-name>
+                <servlet-class>Login</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>Login</servlet-name>
+                <url-pattern>/Login</url-pattern>
+        </servlet-mapping>
+
+	<servlet>
+                <servlet-name>DFS</servlet-name>
+                <servlet-class>DFS</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>DFS</servlet-name>
+                <url-pattern>/DFS</url-pattern>
+        </servlet-mapping>
+
+	<servlet>
+                <servlet-name>DeleteFile</servlet-name>
+                <servlet-class>DeleteFile</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>DeleteFile</servlet-name>
+                <url-pattern>/DeleteFile</url-pattern>
+        </servlet-mapping>
+
+	<servlet>
+                <servlet-name>Logout</servlet-name>
+                <servlet-class>Logout</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>Logout</servlet-name>
+                <url-pattern>/Logout</url-pattern>
+        </servlet-mapping>
+
+
+		<servlet>
+                <servlet-name>Admin</servlet-name>
+                <servlet-class>Admin</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>Admin</servlet-name>
+                <url-pattern>/Admin</url-pattern>
+        </servlet-mapping>
+
+<servlet>
+                <servlet-name>AdminIndex</servlet-name>
+                <servlet-class>AdminIndex</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>AdminIndex</servlet-name>
+                <url-pattern>/AdminIndex</url-pattern>
+        </servlet-mapping>
+
+
+
 </web-app>

@@ -19,7 +19,7 @@ public class DeleteFile extends HttpServlet {
 	public void init( ){
 		// Get the file location where it would be stored.
 		//filePath = getServletContext().getInitParameter("file-upload"); 
-		node = new NameNode(1024, 2);
+		node = NameNode.getNode();
 	}
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,6 +33,7 @@ public class DeleteFile extends HttpServlet {
 	    	String filename = request.getParameter("filename4");
 	    	
 	    	node.deleteFile(filename, username);
+	    	Thread.sleep(1000);
 		} catch (Exception e) {
 			
 		} finally {

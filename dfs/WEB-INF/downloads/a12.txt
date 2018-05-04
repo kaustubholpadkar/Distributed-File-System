@@ -1,0 +1,37 @@
+create table candidate
+(cid number(10) constraint pk_cid primary key,
+ cname varchar2(20) constraint nn_cname not null,
+ caddress varchar2(50),
+ cbirth_dt date)
+
+insert into candidate values(:cid,:cname,:caddress,:cbirth_dt)
+
+create table test
+ (tid number(10) constraint pk_tid primary key,
+  tname varchar2(30) constraint uk_tname unique,
+  tot_mks number(10) constraint ck_tot_mks check(tot_mks>0),
+  pass_mks number(10) constraint ck_pass_mks check(pass_mks>0),
+  constraint ck_tot_mks_pass_mks check(pass_mks<tot_mks))
+
+insert into test values(:tid,:tname,:tot_mks,:pass_mks)
+
+create table test_center
+(tcid number(10) constraint pk_tcid primary key,
+ location varchar2(30),
+ mgr varchar2(30),
+ capacity number(10) constraint ck_capacity check(capacity>0))
+
+insert into test_center values(:tcid,:location,:mgr,:capacity)
+
+create table test_taken
+(cid number(10) constraint fK_cid references candidate(cid),
+ tid number(10) constraint fk_tid references test(tid),
+ tcid number(10) constraint fk_tcid references test_center(tcid),
+ test_dt date,
+ score number(10),
+ constraint pk_cid_tid__tcid primary key(cid,tid,tcid))
+
+
+insert into test_taken values(:cid,:tid,:tcid,:test_dt,:score)
+
+select c.* from candidate c, test_center t1,test_taken t2 where t1.location='Bangalore' and t1.tcid=t2.tcid and c.cid=t2.cid and t2.score=(select score from test_taken) where cid=(select cid from candidate where cname='Peter')

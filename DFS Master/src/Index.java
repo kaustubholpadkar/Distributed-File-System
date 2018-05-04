@@ -54,7 +54,7 @@ public class Index extends HttpServlet {
                     "         <input type = \"password\" class=\"form-control\" name = \"password\" />\n" +
                     "         <br>\n" +
                     "         <br>\n" +	
-                    "			<input type=\"submit\" class=\"btn btn-default\">Login</input>" + 
+                    "			<input type=\"submit\" class=\"btn btn-default\" value=\"Login\"></input>" + 
                     "   </form>\n" +
                     "</div>" + 
                     "<div class=\"col-md-8\">" +                    

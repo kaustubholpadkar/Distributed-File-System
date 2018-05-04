@@ -9,7 +9,7 @@ public class DataNodeServer {
 
 	public static void main(String[] args) {
 		
-		String server_ip = args[0];
+		String server_ip = "";
 		int serverPort = 9132;
 		
 		try {

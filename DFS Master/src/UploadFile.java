@@ -18,7 +18,11 @@ import org.apache.commons.io.output.*;
 
 public class UploadFile extends HttpServlet {
    
-   private boolean isMultipart;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean isMultipart;
    private String filePath;
    private int maxFileSize = 50 * 1024;
    private int maxMemSize = 4 * 1024;
@@ -28,7 +32,7 @@ public class UploadFile extends HttpServlet {
    public void init( ){
       // Get the file location where it would be stored.
       filePath = getServletContext().getInitParameter("file-upload"); 
-      node = new NameNode(1024, 2);
+      node = NameNode.getNode();
    }
    
    public void doPost(HttpServletRequest request, HttpServletResponse response)

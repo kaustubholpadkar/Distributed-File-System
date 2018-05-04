@@ -17,10 +17,15 @@ import java.util.Arrays;
 
 public class NameNode {
 
+	static NameNode instance;
+	
     // Block size of each fragment
-    int blocksize;
-    ArrayList<InetAddress> ips;
-    int replication_factor;
+    static int blocksize = 1024;
+    
+    // Replication Factor
+    static int replication_factor = 2;
+    
+    static ArrayList<InetAddress> ips;
     
 
     // JDBC driver name and database URL
@@ -31,14 +36,35 @@ public class NameNode {
     static final String USER = "root";
     static final String PASS = "";
     
-    Connection conn = null;
-    Statement stmt = null;
-
+    static Connection conn;
+    static Statement stmt;
+    
+    public static NameNode getNode() {
+		if (instance == null) {
+			instance = new NameNode();
+		}
+		return instance;
+	}
+    
+    static public void setReplicationFactor(int replication_factor) {
+    	NameNode.replication_factor = replication_factor;
+    }
+    
+    static public void setBlockSize(int blocksize) {
+    	NameNode.blocksize = blocksize;
+    }
+    
+    static public int getReplicationFactor() {
+    	return replication_factor;
+    }
+    
+    static public int getBlockSize() {
+    	return blocksize;
+    }
 
     // Constructor
-    public NameNode (int blocksize, int replication_factor) {
-        this.blocksize = blocksize;
-        this.replication_factor = replication_factor; 
+    private NameNode () {
+    	 
         try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Connecting to database...");
@@ -50,7 +76,7 @@ public class NameNode {
     }
 
     // Convert File to array of Bytes
-    public byte[] fileToBytes (File file) {
+    static public byte[] fileToBytes (File file) {
     	FileInputStream fis = null;
         try{
             byte[] bytearray = new byte[(int) file.length()];
@@ -72,7 +98,7 @@ public class NameNode {
     }
 
     // Write array of Bytes to File
-    public File bytesToFile (String name, byte[] bytearray) {
+    static public File bytesToFile (String name, byte[] bytearray) {
     	FileOutputStream fos = null;
         try {
             File file = new File(name);
@@ -94,7 +120,7 @@ public class NameNode {
     }
 
     // Divide file into fragments
-    public Fragment[] fragmentFile (File file, String username) {
+    static public Fragment[] fragmentFile (File file, String username) {
 
         int numberOfFragments;
         byte[] bytes;
@@ -121,7 +147,7 @@ public class NameNode {
         return fragments;
     }
     
-    public boolean defragmentFile (String filename, ArrayList<Fragment> fragments) {
+    static public boolean defragmentFile (String filename, ArrayList<Fragment> fragments) {
     	boolean status = false;
     	byte[] bytes = null;
     	ByteBuffer buffer = null;
@@ -151,7 +177,7 @@ public class NameNode {
         return status;
     }
 
-    public void sendFragment (String ip, Fragment fragment) {
+    static public void sendFragment (String ip, Fragment fragment) {
 
 
         try{
@@ -167,7 +193,7 @@ public class NameNode {
         }
     }
 
-    public void updateIPs () {
+    static public void updateIPs () {
     	try {
     		UDP_SERVER_THREAD udp = new UDP_SERVER_THREAD(9132);
         	
@@ -195,7 +221,7 @@ public class NameNode {
     	
     }
     
-    public void distributeFile (File file, String username) {
+    static public void distributeFile (File file, String username) {
     	updateIPs();
     	Fragment[] fragments = fragmentFile(file, username);
     	int index = 0;
@@ -214,7 +240,7 @@ public class NameNode {
     	}
     }
     
-    public void collectFile (File file, String username) {
+    static public void collectFile (File file, String username) {
     	updateIPs();
     	ArrayList<Fragment> fragments = new ArrayList<Fragment>();
     	DataNodeInterface node;
@@ -266,7 +292,7 @@ public class NameNode {
     	}
     }
     
-    public void deleteFile (String filename, String username) {
+    static public void deleteFile (String filename, String username) {
     	try {
     		String select_query = "select id, ip, seqno from chunks where filename = '" + filename + "' and username = '" + username + "'";
     		
@@ -298,7 +324,7 @@ public class NameNode {
     	}
     }
     
-    public ArrayList<String> getFiles (String username) {
+    static public ArrayList<String> getFiles (String username) {
     
 		ArrayList<String> files = new ArrayList<String>();
 		
@@ -319,7 +345,7 @@ public class NameNode {
 		return files;
     }
 
-	public void savetodatabase(String username, String filename, int seqno, String hostAddress) {
+    static public void savetodatabase(String username, String filename, int seqno, String hostAddress) {
 		try {
             
             PreparedStatement stmt = conn.prepareStatement("insert into chunks (filename, username, seqno, ip) values(?,?,?,?)");

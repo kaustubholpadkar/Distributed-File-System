@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Index Servlet</title>
+    </head>
+    <body>
+        
+        <h1>
+meghakshb		</h1>
+        
+        <h2>Download Setup</h2>
+        <form method = "GET" action = "DownloadDataNodeSetup" name="form1">
+            <input type="submit" value="download setup">
+        </form>
+        
+        <hr>
+        
+        <h2>Upload File</h2>
+        <form method = "POST" action = "UploadFile" name="form2" enctype = "multipart/form-data">
+            
+            <input type="file" name="file">
+            <br>
+            <input type="submit" value="Upload File">
+        </form>
+        
+        <hr>
+        
+        <h2>Download File</h2>
+        <form method = "GET" action = "DownloadFile" name="form3">
+            Filename: <input type="text" id="filename1" name="filename1">
+            <br>
+            <input type="submit" value="Download File">
+            <!--a href="DownloadFile">Download File</a-->
+        </form>
+        <hr>
+        
+        <h2>Delete File</h2>
+        <form method = "GET" action = "DeleteFile" name="form4">
+            Filename: <input type="text" id="filename4" name="filename4">
+            <br>
+            <input type="submit" value="Delete File">
+            <!--a href="DownloadFile">Download File</a-->
+        </form>
+<table><tr> <th> File Name </th> <th> Download </th> <th> Delete </th> </tr><tr><td>Assignment 5.docx</td><td><a href = 'DownloadFile?filename1='Assignment 5.docx'> Download </a></td><td><a href = 'DeleteFile?filename4='Assignment 5.docx'> Delete </a></td></tr></table>    </body>
+</html>
+
+

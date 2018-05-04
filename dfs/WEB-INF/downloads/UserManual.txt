@@ -1,0 +1,94 @@
+UNIVERSITY HEALTH CENTRE MANAGEMENT SYSTEM
+USER MANUAL
+
+1. Authentication
+Login and Change Password
+There are mainly five authenticated users of our system: Admin, Receptionist, Doctor, Chemist and Lab Technician. The very first need to use our system is to enter a username and password and click on 'Login' button. If  both are correct, the user is directed to his/her home page otherwise a message is displayed saying 'Login Failed'. If username is correct but password is incorrect, a hint is shown. If the user wants to change his/her password he/she has to click on 'Change Password' link. The user will be directed to another page where he/she has to fill his/her username and old password and click on 'Verify' button. Since both the fields are mandatory, if the user clicks on 'Verify' button without entering data, 'Required' message is shown. If both details are correct, the user is allowed to enter a new password two times and a hint and click on 'Submit' button. The user is then shown message 'Details updated successfully'. Now, if the user has to to go to Login Page again, he/she has to click on 'Previous' link. On Login Page, If the user wants to clear all fields, he/she just have to click on 'Cancel' button.
+
+2. Admin Login
+
+Add User
+When the admin logins successfully, he/she can see his/her home page where there is a menubar to navigate through the web pages. If any new user is to added to this system, it can be done here. The admin has to select the user from the list of staff members, give new user's username, password, a hint, select the type of the user and click on 'Add User' button. The message 'User Registered Successfully' is shown if the new user is added successfully.
+
+Reset Password
+If any registered user forgots his/her password, the admin has the authority to reset his/her password. This is done by clicking on 'Reset Password' button and selecting the user whose password is to be reset. The password and hint of the user are made same as the username of the user and accordingly, message is displayed.
+
+Add Staff Member
+To add a new staff details to the system, admin has to select 'Staff Member' from MenuBar and 'Add Staff Member' from sub-menu. The admin is shown a form to be filled with staff's details. All the fields marked with * are mandatory. Chararters other than alphabets are not permitted in names and characters other than numbers are not permitted in contact number and pin code. All the dates are in 'mm/dd/yyyy' format. After filling up the form, the admin has to click on 'Submit' button. If the staff member is added successfully, he/she will be shown a message saying that. To clear all fields, click on 'Reset' button.
+
+View/Update Staff Member
+To view or update the existing staff member's details, admin has to select 'Staff' Member from MenuBar and 'View/Update Details' from sub-menu. The Staff id and his/her name is shown in tabular form. To remove all the records of a staff member from the system, admin has to click on 'Delete' link of the same row to be removed. By clicking on 'Select' link, admin can see all the details of the staff member. If any detail is to be modified, admin has to click on 'Edit' link at the bottom of the details, then edit the details to be modified and click on 'Update' link. If after clicking on 'Edit', no data is to be changed, click on 'Cancel' link.
+
+Add Doctor
+To add a new doctor to the system, admin has to select 'Doctor' from MenuBar and 'Add Doctor' from sub-menu. The procedure is same as in adding a new staff member. Note that the doctor must be a registered staff member in the system. The user and his/her specialization field is to be selected from the list given. Further the doctor's availability timings are to be entered according to the formats specified and the days of availability are to be be ticked. After clicking on 'Save' button, The Doctor's details are added successfully. To clear all fields, click on 'Reset' button.
+
+View/Update Doctor
+To view or update the existing doctor's details, admin has to select 'Doctor' from MenuBar and 'View/Update Details' from sub-menu. Here, all the details about doctors are shown in tabular form. If details about any doctor is to be modified, the admin has to click on 'Edit' link against that doctor, edit the required detail and click on 'Update' Link. If after clicking on 'Edit', no data is to be changed, click on 'Cancel' link. To remove any doctor's whole record from the system, click on 'Delete' link against that doctor.
+
+Profile
+To see his/her personal details, the admin can click on 'Profile' from the MenuBar. To modify any field, the procedure is same as in updating staff members' details. To return, click on 'Previous' link.
+
+2. Receptionist Login
+Patient Appointment
+When the receptionist logins successfully, he/she can see his/her home page where there is a menubar to navigate through the web pages. The home page consists of patients appointment where the receptionist has to enter patient's PRN (if he/she is student) or Registration number (if he/she is staff), select specialization of the doctor to whom patient wants to visit and click on 'OK'. If the patient is unregistered, appointment will not be given and a message is shown and the receptionist is asked to register patient.For this he/she has to click on 'Register Patient' link. If the doctor is not availabile, then also appointment will not be given and a message is shown along with the all doctors' availability details of the selected specialization. Further, if the receptionist has to see how many unchecked patients are there, he/she can click on 'View Unchecked Patients' button. The result is shown in a tabular form specialization-wise.
+
+Patient Registration
+To register a new Patient, the receptionist has to select 'Patient' from MenuBar and then 'Add new Patient' from sub-menu. A form is shown to be filled up. First of all, it has to be selected if the patient is either a student or staff and accordingly details have to be filled up. The fields with * are mandatory.
+Then 'Submit' button is to be clicked. If all the details entered are valid, a message is shown and to return to return to the home page, the receptionist can click on 'Give Appointment' button. If the details are not valid, accordingly messages are displayed and patient is not registered. To clear all the fields, the receptionist can click on 'Reset' button.
+
+View/Update Patient
+To view or modify details of a registered patient, the receptionist has to select 'Patient' from MenuBar and then 'View/Update Details' from sub-menu. Initially, all the registered patients' id and name are shown in table. By clicking on 'Delete' link against a patient, whole records of that patient can be removed. By clicking on 'Select' link against a patient, all personal details of that patient can be seen. The details are divided into two parts. First part consists of common details between a staff and student and the second part consists of details which are different for a staff and student. For both parts, 'Edit' links are separate. To modify patients' details, the procedure is same as in Updating a staff member.
+The Patients can be directly searched based on their ID, Name and whether they are staff or student. Accordingly, option is to be selected from the 'search by' list. If 'ID' or 'Name' is selected, the value has to be entered in the textbox and 'Show' button has to be clicked twice. Any of the first,middle or last name of the patient can be entered to search. To clear all the fields, the receptionist can click on 'Cancel' button.
+
+Patients' Track Record
+For track record of patients, the receptionist has to to select 'Visit Track' from the MenuBar. First the dates between which the visit track is to be seen (from and to date) are to be entered and 'Show' button is clicked. To see result of particular 'Specialization' or 'Doctor' or of staff or student patients, the required option can be selected from the 'search by' options. If 'Specialization' or 'Doctor' is selected, further for which specialization or for which doctor the visit track is to be found has to be selected. To see results, 'Show' button is to be clicked. The result is shown in a tabular form consisting of Appointment ID, Appointment date, Patient ID, Patient's name and Doctor's name.
+
+Profile
+To see his/her personal details, the receptionist can click on 'Profile' from the MenuBar. To modify any field, the procedure is same as in updating patients' details. To return, click on 'Previous' link.
+
+3. Doctor Login
+View/Select Appointed Patients
+When the doctor logins successfully, he/she can see his/her home page where there is a menubar to navigate through the web pages. This page consists of the list of appointed patients in a table. To fill up the treatment details, the doctor has to click on the 'Select' button against the patient to be treated.
+
+Treatment and Prescription
+After clicking on the 'Select' link, the doctor is directed to another page. This page first of all consists of selected patient's personal details. 
+In the next section i.e. 'Symptoms and Signs', the doctor has to tick the symptoms that apply. If any symptom is not in the list, the doctor can enter it in the textbox provided. On the right side, there is 'Treatment history' which contains the treatment details of patient's last visit to the health centre. If current appointments symptoms and treatment details are same, by clicking on 'select' link from 'Treatment history' these can be copied to the current appointment i.e. by clicking on 'select' link, the symptoms of previous appointment are copied to the 'Symptoms and Signs' textbox as well as the medicines are copied to the space provides below. After symptoms, the doctor can add the signs that apply. The signs contains Other Examinations, Per Abdomen, CVS, Respiratory System and CNS. These signs only for General Medicines' doctor. The observations are to be entered accordingly in the spaces provided and can be left blank if they don't apply. On the right side, ther is another section '(Present) History' which shows the signs' observations of the previous appointment, if any.To remove a symptom, the doctor can delete it from from the textbox.
+Next section is the 'Treatment' section in which the medicines to be prescribed are to be selected from the list given. After selecting a medicine, a table appears in which the doctor has to enter the dosage details of the medicines. For this, the doctor has to click on 'Edit' link and then on 'Update' link after providing dosage details.The Total no. of days the medicine is to be taken ane quantity of medicine to be taken per dose are to be entered ane the time when to take medicine are to be ticked.  If the doctor has to prescribe a medicine which s not availabile in he health centre, he/she has to enter its name in the textbox below and click on 'Add' button. If there are more than one medicine, each medicine has to be entered separately. Same as the availabile medicines, the dosage for other medicines is to be provided. To remove a medicine, the doctor can click on 'Delete' link.
+Next is 'Test' section. Here, if the doctor wants to advice test to be done, these are to be ticked in the list given. If the doctor wants to prescribe a test which is not in the list, he has to select 'Any Other' and type the name of the test in the space provided below. After selecting all the tests to be prescribed, the doctor has to click 'Add' button. The list of prescribed tests is shown in a table. To remove a test, the doctor can click on 'Delete' link.
+Moreover, on the right side, there is 'Test History' which contains the details of the tests prescribed in the last visit.To clear all the fields, the doctor can click on 'Cancel' button.
+After all this, the doctor has to click on 'Submit' button. There are two 'Submit' buttons provided, one at the top and another at bottom. The doctor can click on any of the buttons. Then, the doctor is directed to next page which contains the whole prescription details of current appointment.
+
+Manage Symptoms
+To work on the symptoms database, the doctor has to select 'Symptoms' from menubar. To add a new symptom to database, its name is to be entered and to which specialization it is related is to be selected and 'Add' button is to be clicked. Message is displayed if it is added successfully. On the right side, a table is shown consisting of all the symptoms' details. Moreover, symptoms can be searched based on name or specialization. For this, the doctor has to select the required option, enter the required value and click on 'Show' button. The required details are shown below in another table. To return, click on  'Previous' link.
+
+Patients' Medical History
+To view Patients' Medical History, the doctor has to select 'History' from menubar. Here, he/she has to enter patients' PRN/Registeration number and double click on 'Show' button. First of all, Patient's personal details are displayed. Then, in 'Chief Complaint and Treatment' section, there is a table consisting of Appointment ID, Appointment date, Symptoms and Doctor's name of all the appointment of the required patient. To see which medicines were prescribed ina a particular appointment and what were its dosage details, the doctor has to click on 'Select' link against a particular appointment and the medicines' dosage details are shown in another table. In the section 'Test History', the tests adviced earlier are shown. The table consists of the Appointment ID, Appointment Date, the test prescribed, whether this test is done or not, and name of the doctor who prescribed test.
+
+Done Tests' Details
+To see the observations of tests done on patients, the doctor has to select 'Test' from menubar. The doctor is directed to a page consisting of a table containing Patient's ID, Patient's name and Prescribed test's name. To see particular test's obervations, the doctor has to click on 'Select' link provided in the table. After that, on right side, another table is displayed showing selected test's observations and then the doctor can give remarks based on that.
+
+Profile
+To see his/her personal details, the doctor can click on 'Profile' from the MenuBar. To modify any field, the procedure is same as in updating patients' details. To return, click on 'Previous' link.
+
+4. Chemist Login
+View/Select and Give Medicines to Checked Patients
+When the chemist logins successfully, he/she can see his/her home page where there is a menubar to navigate through the web pages. This page consists of the list of checked patients who are to be given medicines in a table. To see which medicines are prescribed to a patient, the chemist has to click on 'Select' link against that patient. From here he/she is directed to another page showing some of the patient's personal details and the medicines prescribed to the patient. After giving medicines to the patient, the chemist has to click on 'Done' button from where he/she is directed to another page. This page consists of a report of the medicines prescribed and their dosage details.
+
+Medicine Maintenance
+To add a new Medicine into the database of the system, the chemist has to select 'Medicines' from MenuBar. The chemist has to enter Medicine ID, it's name, it's item code and click on 'Add' button. If added successfully, a message is displayed. To clear all the fields, the chemist can click on 'Clear' button. Below his, all the medicines' details are shown in a table. These can be modified or deleted as in 'View/Update Doctor'. Further medicines can be searched based on their name or item-code which is to be entered in the textbox provided and 'Search' button is to be clicked. If the medicine is availabile, its details are shown below in another table. 
+
+Manage Symptoms
+This is same as Managing Symptoms by Doctor.
+
+Profile
+To see his/her personal details, the chemist can click on 'Profile' from the MenuBar. To modify any field, the procedure is same as in updating patients' details. To return, click on  'Previous' link.
+
+5. Lab Technician Login
+View/Select Checked Patients
+When the lab technician logins successfully, he/she can see his/her home page where there is a menubar to navigate through the web pages. It consists of a table showing a list of checked patients to whom test are adviced by doctors. The table contains Appointment ID, Patient's Name, Doctor's Name and doctor's Specialization. To see which tests are adviced to a patient, the lab technician has to click on 'select' link provided in the table. To add test observations, he/she has to click on 'Next' link. 
+
+Test Observations and Report
+After clicking on 'Next' link of the home page, the lab technician is directed to another page. Here, first of all patient's ID and Name is displayed. There are separate buttons for all the tests availabile in the health centre but only those adviced to the selected patient can be selected. To enter the observations for tests performed, click on the respective tests' button. Now, the observations are to entered and 'Save' button is to be clicked. If test report is to be generated, the lab technician has to click on 'Print' button. After this, he/she can see the whole test report. 
+
+Profile
+To see his/her personal details, the lab technician can click on 'Profile' from the MenuBar. To modify any field, the procedure is same as in updating patients' details. To return, click on 'Previous' link.

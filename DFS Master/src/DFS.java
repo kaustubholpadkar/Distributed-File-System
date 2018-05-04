@@ -19,7 +19,7 @@ public class DFS extends HttpServlet {
 	public void init( ){
 		// Get the file location where it would be stored.
 		//filePath = getServletContext().getInitParameter("file-upload"); 
-		node = new NameNode(1024, 2);
+		node = NameNode.getNode();
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +41,7 @@ public class DFS extends HttpServlet {
         upload_file += "<label for=\"exampleFormControlFile1\">Select File to Upload</label>";
         upload_file += "<input type=\"file\" class=\"form-control-file\" name=\"file\" id=\"exampleFormControlFile1\">";
         upload_file += "</div>";
-        upload_file += "<input type=\"submit\" class=\"btn btn-primary\">Upload</input>";
+        upload_file += "<input type=\"submit\" class=\"btn btn-primary\" value=\"Upload\"></input>";
         upload_file += "</form>";
         
         String html_files = "";

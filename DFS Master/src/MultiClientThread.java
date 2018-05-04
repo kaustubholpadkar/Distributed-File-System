@@ -48,9 +48,13 @@ public class MultiClientThread implements Runnable{
 	            msg = msg.trim();
 	            System.out.println("Received: " + msg);
 	            
+	            System.out.println(packet.getAddress().getHostAddress());
+	            
+	            InetAddress server_ip_adr = packet.getAddress();
+	            
 	            msg = "Hii Server";
 	            byte[] buf1 = msg.getBytes();
-	            DatagramPacket reply = new DatagramPacket(buf1, buf1.length, InetAddress.getByName(server_ip), serverPort);
+	            DatagramPacket reply = new DatagramPacket(buf1, buf1.length, server_ip_adr , serverPort);
 	            DatagramSocket mysocket = new DatagramSocket(localPort, localAddress);
 	            mysocket.send(reply);
 	            mysocket.close();
